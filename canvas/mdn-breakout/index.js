@@ -10,19 +10,32 @@ let y = canvas.height - 30;
 let dx = 2;
 let dy = -2;
 
-let drawBall = () => {
+const ballRadius = 10;
+
+const drawBall = () => {
   // paint the ball
   ctx.beginPath();
-  ctx.arc(x, y, 10, 0, Math.PI * 2);
+  ctx.arc(x, y, ballRadius, 0, Math.PI * 2);
   ctx.fillStyle = "#0095DD";
   ctx.fill();
   ctx.closePath();
 };
 
-let draw = () => {
+const draw = () => {
   // clear canvas before each frame
   ctx.clearRect(0, 0, canvas.width, canvas.height);
-  drawBall()
+  drawBall();
+  // make it bounce of left and right walls
+  // ballRadius usedso the ball won't sink half-way into the wall before changing direction
+  if (x + dx > canvas.width - ballRadius || x + dx < ballRadius) {
+    dx = -dx;
+  }
+
+  // make it bounce of top and bottom walls
+  if (y + dy > canvas.height - ballRadius || y + dy < ballRadius) {
+    dy = -dy;
+  }
+  // make the ball move
   x += dx;
   y += dy;
 };
