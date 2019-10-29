@@ -53,9 +53,20 @@ const draw = () => {
     dx = -dx;
   }
 
-  // make it bounce of top and bottom walls
-  if (y + dy > canvas.height - ballRadius || y + dy < ballRadius) {
+  // make it bounce of top and implement gameover
+  if (y + dy < ballRadius) {
     dy = -dy;
+  } else if (y + dy > canvas.height - ballRadius) {
+    // check whether the center of the ball is between the left and right edges of the paddle
+    if (x > paddleX && x < paddleX + paddleWidth) {
+      dy = -dy;
+      // if it isn't, the ball git the bottom of the screen and it's gameover
+    } else {
+      alert("GAME OVER");
+      // reload the current page
+      document.location.reload();
+      clearInterval(interval);
+    }
   }
 
   // make the paddle move
@@ -77,7 +88,7 @@ const draw = () => {
   y += dy;
 };
 
-setInterval(draw, 10);
+let interval = setInterval(draw, 10);
 
 // handle imput
 const keyDownHandler = e => {
