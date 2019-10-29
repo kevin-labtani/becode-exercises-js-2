@@ -97,7 +97,6 @@ const collisionDetection = () => {
           if (score == brickColumnCount * brickRowCount) {
             alert("You've won, congratulations!");
             document.location.reload();
-            clearInterval(interval);
           }
         }
       }
@@ -192,7 +191,6 @@ const draw = () => {
       if (!lives) {
         alert("GAME OVER");
         document.location.reload();
-        clearInterval(interval);
       } else {
         x = canvas.width / 2;
         y = canvas.height - 30;
@@ -200,7 +198,6 @@ const draw = () => {
         dy = -2;
         paddleX = (canvas.width - paddleWidth) / 2;
       }
-      N;
     }
   }
 
@@ -215,6 +212,8 @@ const draw = () => {
   // make the ball move
   x += dx;
   y += dy;
+
+  requestAnimationFrame(draw);
 };
 
-let interval = setInterval(draw, 10);
+draw();
