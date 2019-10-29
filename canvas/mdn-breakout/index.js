@@ -46,7 +46,7 @@ for (let c = 0; c < brickColumnCount; c++) {
   }
 }
 
-// handle imput
+// handle keyboard imput
 const keyDownHandler = e => {
   if (e.key == "Right" || e.key == "ArrowRight") {
     rightPressed = true;
@@ -60,6 +60,16 @@ const keyUpHandler = e => {
     rightPressed = false;
   } else if (e.key == "Left" || e.key == "ArrowLeft") {
     leftPressed = false;
+  }
+};
+
+// handle mouse input
+const mouseMoveHandler = e => {
+  // clientX = the horizontal coordinate in the viewport of the mouse
+  // canvas.offsetLeft = left edge of the viewport
+  let relativeX = e.clientX - canvas.offsetLeft;
+  if (relativeX > 0 && relativeX < canvas.width) {
+    paddleX = relativeX - paddleWidth / 2;
   }
 };
 
@@ -103,6 +113,7 @@ const drawScore = () => {
 // listen for controls
 document.addEventListener("keydown", keyDownHandler);
 document.addEventListener("keyup", keyUpHandler);
+document.addEventListener("mousemove", mouseMoveHandler);
 
 // paint the ball
 const drawBall = () => {
