@@ -37,6 +37,9 @@ let brickOffsetLeft = 30;
 // count score
 let score = 0;
 
+// count lives
+let lives = 3;
+
 // brick array
 let bricks = [];
 for (let c = 0; c < brickColumnCount; c++) {
@@ -110,6 +113,13 @@ const drawScore = () => {
   ctx.fillText("Score: " + score, 8, 20);
 };
 
+// draw lives
+const drawLives = () => {
+  ctx.font = "16px Arial";
+  ctx.fillStyle = "#0095DD";
+  ctx.fillText("Lives: " + lives, canvas.width - 65, 20);
+};
+
 // listen for controls
 document.addEventListener("keydown", keyDownHandler);
 document.addEventListener("keyup", keyUpHandler);
@@ -160,6 +170,7 @@ const draw = () => {
   drawBall();
   drawPaddle();
   drawScore();
+  drawLives();
   collisionDetection();
 
   // make it bounce of left and right walls
@@ -177,10 +188,19 @@ const draw = () => {
       dy = -dy;
       // if it isn't, the ball git the bottom of the screen and it's gameover
     } else {
-      alert("GAME OVER");
-      // reload the current page
-      document.location.reload();
-      clearInterval(interval);
+      lives--;
+      if (!lives) {
+        alert("GAME OVER");
+        document.location.reload();
+        clearInterval(interval);
+      } else {
+        x = canvas.width / 2;
+        y = canvas.height - 30;
+        dx = 2;
+        dy = -2;
+        paddleX = (canvas.width - paddleWidth) / 2;
+      }
+      N;
     }
   }
 
