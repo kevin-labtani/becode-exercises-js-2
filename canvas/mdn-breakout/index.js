@@ -34,6 +34,9 @@ let brickPadding = 10;
 let brickOffsetTop = 30;
 let brickOffsetLeft = 30;
 
+// count score
+let score = 0;
+
 // brick array
 let bricks = [];
 for (let c = 0; c < brickColumnCount; c++) {
@@ -75,10 +78,26 @@ const collisionDetection = () => {
         ) {
           dy = -dy;
           b.status = 0;
+          score++;
+
+          // win condition
+          if (score == brickColumnCount * brickRowCount) {
+            alert("You've won, congratulations!");
+            document.location.reload();
+            clearInterval(interval);
+          }
         }
       }
     }
   }
+};
+
+// draw the score
+const drawScore = () => {
+  ctx.font = "16px Arial";
+  ctx.fillStyle = "#0095DD";
+  // parameters: text itself, x coord, y coord
+  ctx.fillText("Score: " + score, 8, 20);
 };
 
 // listen for controls
@@ -129,6 +148,7 @@ const draw = () => {
   drawBricks();
   drawBall();
   drawPaddle();
+  drawScore();
   collisionDetection();
 
   // make it bounce of left and right walls
