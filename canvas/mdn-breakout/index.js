@@ -39,9 +39,51 @@ let bricks = [];
 for (let c = 0; c < brickColumnCount; c++) {
   bricks[c] = [];
   for (let r = 0; r < brickRowCount; r++) {
-    bricks[c][r] = { x: 0, y: 0 };
+    bricks[c][r] = { x: 0, y: 0, status: 1 };
   }
 }
+
+// handle imput
+const keyDownHandler = e => {
+  if (e.key == "Right" || e.key == "ArrowRight") {
+    rightPressed = true;
+  } else if (e.key == "Left" || e.key == "ArrowLeft") {
+    leftPressed = true;
+  }
+};
+
+const keyUpHandler = e => {
+  if (e.key == "Right" || e.key == "ArrowRight") {
+    rightPressed = false;
+  } else if (e.key == "Left" || e.key == "ArrowLeft") {
+    leftPressed = false;
+  }
+};
+
+// handle collision
+// b variable  stores the brick object in every loop of the collision detection
+const collisionDetection = () => {
+  for (let c = 0; c < brickColumnCount; c++) {
+    for (let r = 0; r < brickRowCount; r++) {
+      let b = bricks[c][r];
+      if (b.status == 1) {
+        if (
+          x > b.x &&
+          x < b.x + brickWidth &&
+          y > b.y &&
+          y < b.y + brickHeight
+        ) {
+          dy = -dy;
+          b.status = 0;
+        }
+      }
+    }
+  }
+};
+
+// listen for controls
+document.addEventListener("keydown", keyDownHandler);
+document.addEventListener("keyup", keyUpHandler);
 
 // paint the ball
 const drawBall = () => {
@@ -65,15 +107,18 @@ const drawPaddle = () => {
 const drawBricks = () => {
   for (let c = 0; c < brickColumnCount; c++) {
     for (let r = 0; r < brickRowCount; r++) {
-      let brickX = c * (brickWidth + brickPadding) + brickOffsetLeft;
-      let brickY = r * (brickHeight + brickPadding) + brickOffsetTop;
-      bricks[c][r].x = brickX;
-      bricks[c][r].y = brickY;
-      ctx.beginPath();
-      ctx.rect(brickX, brickY, brickWidth, brickHeight);
-      ctx.fillStyle = "#0095DD";
-      ctx.fill();
-      ctx.closePath();
+      //draw brick if its status is 1
+      if (bricks[c][r].status == 1) {
+        let brickX = c * (brickWidth + brickPadding) + brickOffsetLeft;
+        let brickY = r * (brickHeight + brickPadding) + brickOffsetTop;
+        bricks[c][r].x = brickX;
+        bricks[c][r].y = brickY;
+        ctx.beginPath();
+        ctx.rect(brickX, brickY, brickWidth, brickHeight);
+        ctx.fillStyle = "#0095DD";
+        ctx.fill();
+        ctx.closePath();
+      }
     }
   }
 };
@@ -84,6 +129,7 @@ const draw = () => {
   drawBricks();
   drawBall();
   drawPaddle();
+  collisionDetection();
 
   // make it bounce of left and right walls
   // ballRadius usedso the ball won't sink half-way into the wall before changing direction
@@ -109,16 +155,10 @@ const draw = () => {
 
   // make the paddle move
   // inner if statement to prevent it form going offscreen
-  if (rightPressed) {
+  if (rightPressed && paddleX < canvas.width - paddleWidth) {
     paddleX += 7;
-    if (paddleX + paddleWidth > canvas.width) {
-      paddleX = canvas.width - paddleWidth;
-    }
-  } else if (leftPressed) {
+  } else if (leftPressed && paddleX > 0) {
     paddleX -= 7;
-    if (paddleX < 0) {
-      paddleX = 0;
-    }
   }
 
   // make the ball move
@@ -127,24 +167,3 @@ const draw = () => {
 };
 
 let interval = setInterval(draw, 10);
-
-// handle imput
-const keyDownHandler = e => {
-  if (e.key == "Right" || e.key == "ArrowRight") {
-    rightPressed = true;
-  } else if (e.key == "Left" || e.key == "ArrowLeft") {
-    leftPressed = true;
-  }
-};
-
-const keyUpHandler = e => {
-  if (e.key == "Right" || e.key == "ArrowRight") {
-    rightPressed = false;
-  } else if (e.key == "Left" || e.key == "ArrowLeft") {
-    leftPressed = false;
-  }
-};
-
-// listen for controls
-document.addEventListener("keydown", keyDownHandler);
-document.addEventListener("keyup", keyUpHandler);
