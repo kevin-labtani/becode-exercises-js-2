@@ -12,14 +12,15 @@ const generateQuoteDom = data => {
   citeParag.appendChild(cite);
 };
 
-// getQuote with fetch and async/await
-const fetchQuote = async () => {
-  const response = await fetch(`https://thatsthespir.it/api`);
-  if (response.status === 200) {
-    return response.json();
-  } else {
-    throw new Error("Unable to fetch the quote");
-  }
+// getQuote with fetch
+const fetchQuote = () => {
+  return fetch(`https://thatsthespir.it/api`).then(response => {
+    if (response.status === 200) {
+      return response.json();
+    } else {
+      throw new Error("Unable to fetch the puzzle");
+    }
+  });
 };
 
 fetchQuote()
