@@ -193,7 +193,11 @@ let titleize = string => {
 };
 
 let checkForSpecialCharacters = string => {
-  return "Write your method here";
+  // \W Non-wordly character: anything but \w, e.g a non-latin letter or a space.
+  if (string.match(/\W/)) {
+    return true;
+  }
+  return false;
 };
 
 let squareRoot = number => {
@@ -201,12 +205,12 @@ let squareRoot = number => {
 };
 
 let factorial = number => {
-  function factorial(n) {
+  const factorial = n => {
     if (n === 0) {
       return 1;
     }
     return n * factorial(n - 1);
-  }
+  };
   return factorial(number);
 };
 
@@ -215,11 +219,13 @@ let findAnagrams = string => {
 };
 
 let convertToCelsius = number => {
-  let getTempConversion = fahrenheit => Math.round(((fahrenheit - 32) * 5) / 9);
+  const getTempConversion = fahrenheit =>
+    Math.round(((fahrenheit - 32) * 5) / 9);
 
   return getTempConversion(number);
 };
 
 let letterPosition = array => {
-  return "Write your method here";
+  const mappedArray = array.map(el => el.toLowerCase().charCodeAt() - 96);
+  return mappedArray;
 };
