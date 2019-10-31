@@ -189,7 +189,16 @@ let getDomainName = string => {
 };
 
 let titleize = string => {
-  return "Write your method here";
+  const titleArray = string.split(" ");
+  const endArray = [];
+
+  titleArray.forEach(word => {
+    const wordArray = word.split("");
+    wordArray[0] = wordArray[0].toUpperCase();
+    const JoinedWord = wordArray.join("");
+    endArray.push(JoinedWord);
+  });
+  return endArray.join(" ");
 };
 
 let checkForSpecialCharacters = string => {
