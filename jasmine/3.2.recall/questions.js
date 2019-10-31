@@ -205,8 +205,10 @@ let titleize = string => {
     }
   }
   let joinedArray = endArray.join(" ");
-  if (joinedArray.includes(". and")) {
-    joinedArray = joinedArray.replace(". and", ". And");
+
+  if (joinedArray.includes(".")) {
+    const char = joinedArray.charAt(joinedArray.indexOf(".") + 2);
+    joinedArray = joinedArray.replace(char, char.toUpperCase());
   }
   return joinedArray;
 };
