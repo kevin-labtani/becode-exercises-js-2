@@ -193,20 +193,22 @@ let titleize = string => {
   const endArray = [];
 
   titleArray.forEach(word => {
-    console.log(word);
     const wordArray = word.split("");
     wordArray[0] = wordArray[0].toUpperCase();
     const JoinedWord = wordArray.join("");
     endArray.push(JoinedWord);
   });
 
-  console.log(endArray);
   for (let i = 1; i < endArray.length; i++) {
     if (endArray[i] === "The" || endArray[i] === "And") {
       endArray[i] = endArray[i].toLowerCase();
     }
   }
-  return endArray.join(" ");
+  let joinedArray = endArray.join(" ");
+  if (joinedArray.includes(". and")) {
+    joinedArray = joinedArray.replace(". and", ". And");
+  }
+  return joinedArray;
 };
 
 let checkForSpecialCharacters = string => {
