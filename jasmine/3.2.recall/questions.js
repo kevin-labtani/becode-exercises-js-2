@@ -70,7 +70,7 @@ let makeNegative = number => {
 };
 
 let numberOfPalindromes = array => {
-  const PalArray = array.filter(
+  const palArray = array.filter(
     element =>
       element ===
       element
@@ -78,7 +78,7 @@ let numberOfPalindromes = array => {
         .reverse()
         .join("")
   );
-  return PalArray.length;
+  return palArray.length;
 };
 
 let shortestWord = array => {
@@ -193,11 +193,19 @@ let titleize = string => {
   const endArray = [];
 
   titleArray.forEach(word => {
+    console.log(word);
     const wordArray = word.split("");
     wordArray[0] = wordArray[0].toUpperCase();
     const JoinedWord = wordArray.join("");
     endArray.push(JoinedWord);
   });
+
+  console.log(endArray);
+  for (let i = 1; i < endArray.length; i++) {
+    if (endArray[i] === "The" || endArray[i] === "And") {
+      endArray[i] = endArray[i].toLowerCase();
+    }
+  }
   return endArray.join(" ");
 };
 
