@@ -215,10 +215,8 @@ let titleize = string => {
 
 let checkForSpecialCharacters = string => {
   // \W Non-wordly character: anything but \w, e.g a non-latin letter or a space.
-  if (string.match(/\W/)) {
-    return true;
-  }
-  return false;
+  let re = /\W/;
+  return re.test(string);
 };
 
 let squareRoot = number => {
@@ -235,9 +233,7 @@ let factorial = number => {
   return factorial(number);
 };
 
-let findAnagrams = string => {
-  return "Write your method here";
-};
+let findAnagrams = string => {};
 
 let convertToCelsius = number => {
   const getTempConversion = fahrenheit =>
