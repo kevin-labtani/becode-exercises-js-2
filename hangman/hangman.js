@@ -12,10 +12,7 @@ class Hangman {
   getPuzzle() {
     let puzzle = "";
     this.word.forEach((letter, index) => {
-      puzzle +=
-        this.guessedLetters.indexOf(letter) > -1 || letter === " "
-          ? letter
-          : "*";
+      puzzle += this.guessedLetters.indexOf(letter) > -1 ? letter : "*";
     });
     this.puzzle = puzzle;
     return puzzle;
