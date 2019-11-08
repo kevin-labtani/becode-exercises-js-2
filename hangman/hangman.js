@@ -23,14 +23,16 @@ class Hangman {
     const isUnique = !this.guessedLetters.includes(guess);
     const isBadGuess = !this.word.includes(guess);
     const regex = /^[a-z]{1}$/;
-    // stop if status isn't playing
-    // return nothing which is undefined, which will stop it from running
+    // stop if status isn't "playing"
+    // return nothing which is undefined, which will stop the game from running
     if (this.status !== "playing") {
       return;
     }
+
     if (isUnique && regex.test(guess)) {
       this.guessedLetters.push(guess);
     }
+
     if (isUnique && isBadGuess && regex.test(guess)) {
       this.remainingGuesses--;
     }
