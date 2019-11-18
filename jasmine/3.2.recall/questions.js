@@ -200,7 +200,7 @@ let titleize = string => {
   });
 
   for (let i = 1; i < endArray.length; i++) {
-    if (endArray[i] === "The" || endArray[i] === "And") {
+    if (endArray[i].length < 4) {
       endArray[i] = endArray[i].toLowerCase();
     }
   }
